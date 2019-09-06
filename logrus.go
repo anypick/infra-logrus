@@ -2,10 +2,10 @@ package baselog
 
 import (
 	"github.com/anypick/infra"
+	"github.com/anypick/infra-logrus/config"
 	"github.com/anypick/infra/utils/common"
 	"github.com/lestrrat-go/file-rotatelogs"
 	"github.com/sirupsen/logrus"
-	"infra-logrus/config"
 	"os"
 	"path"
 	"strings"
