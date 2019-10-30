@@ -6,6 +6,7 @@ import (
 	"github.com/anypick/infra/utils/common"
 	"github.com/lestrrat-go/file-rotatelogs"
 	"github.com/sirupsen/logrus"
+	"github.com/x-cray/logrus-prefixed-formatter"
 	"os"
 	"path"
 	"strings"
@@ -30,11 +31,16 @@ func initLogrus(config config.LogConfig) {
 		out            *rotatelogs.RotateLogs         // 日志输出
 		err            error
 	)
-	formatter := logrus.TextFormatter{
+
+	// 使用
+	formatter := &prefixed.TextFormatter{
 		FullTimestamp:   true,
 		TimestampFormat: common.TimeFormat,
+		ForceFormatting: true,
+		ForceColors:     false,
+		DisableColors:   false,
 	}
-	logrus.SetFormatter(&formatter)
+	logrus.SetFormatter(formatter)
 	switch config.Level {
 	case "trace":
 		level = logrus.TraceLevel
@@ -63,14 +69,13 @@ func initLogrus(config config.LogConfig) {
 	// 创建日志目录，如果存在则忽略
 	os.MkdirAll(logPath, os.ModePerm)
 	// 定义日志切割
-	out, err = rotatelogs.New(
+	if out, err = rotatelogs.New(
 		strings.TrimSuffix(logPathAndName, ".log")+".%Y%m%d%H.log",
 		rotatelogs.WithLinkName(logPathAndName), // 生成软链，指向最新日志文件
 		rotatelogs.WithMaxAge(time.Duration(config.MaxAge)),
 		rotatelogs.WithRotationTime(time.Duration(config.RotationTime)),
-	)
-	if err != nil {
-		logrus.Error("new rotatelogs error ", err)
+	); err != nil {
+		logrus.Errorf("new rotatelogs error %v", err)
 		return
 	}
 	logrus.SetOutput(out)

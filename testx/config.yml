@@ -1,0 +1,10 @@
+# 日志配置
+logrus:
+  level: info
+  logFileName: register-go
+  filePath: logs/
+  #  配置日志切割
+  # 30 * 24 * 60 * 60 一个月
+  maxAge: 2592000
+  # 24 * 60 * 60 一天
+  rotationTime: 86400
