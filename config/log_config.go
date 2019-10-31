@@ -2,16 +2,11 @@ package config
 
 import (
 	"fmt"
-	"github.com/anypick/infra/base/props/container"
 )
 
 const (
 	YamlPrefix = "logrus"
 )
-
-func init() {
-	container.RegisterYamContainer(&LogConfig{Prefix: YamlPrefix})
-}
 
 // 日志配置
 type LogConfig struct {

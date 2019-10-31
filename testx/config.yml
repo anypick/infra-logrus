@@ -1,6 +1,6 @@
 # 日志配置
 logrus:
-  level: info
+  level: trace
   logFileName: register-go
   filePath: logs/
   #  配置日志切割

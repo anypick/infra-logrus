@@ -3,6 +3,7 @@ package baselog
 import (
 	"github.com/anypick/infra"
 	"github.com/anypick/infra-logrus/config"
+	"github.com/anypick/infra-logrus/helper"
 	"github.com/anypick/infra/utils/common"
 	"github.com/lestrrat-go/file-rotatelogs"
 	"github.com/sirupsen/logrus"
@@ -41,6 +42,9 @@ func initLogrus(config config.LogConfig) {
 		DisableColors:   false,
 	}
 	logrus.SetFormatter(formatter)
+	for _, hook := range helper.GetHook() {
+		logrus.AddHook(hook)
+	}
 	switch config.Level {
 	case "trace":
 		level = logrus.TraceLevel

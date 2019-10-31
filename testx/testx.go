@@ -10,7 +10,9 @@ import (
 
 func Init() {
 	infra.Register(&container.YamlStarter{})
-	infra.Register(&baselog.LogrusStarter{})
+
+
+	baselog.Init()
 
 	infra.Register(&infra.BaseInitializerStarter{})
 
