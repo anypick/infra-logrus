@@ -19,7 +19,7 @@ type LogrusStarter struct {
 }
 
 func (l *LogrusStarter) Init(ctx infra.StarterContext) {
-	initLogrus(*ctx.Yaml().OtherConfig[config.YamlPrefix].(*config.LogConfig))
+	initLogrus(*ctx.Yaml()[config.YamlPrefix].(*config.LogConfig))
 }
 
 // 初始化Logrus

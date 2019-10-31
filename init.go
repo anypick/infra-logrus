@@ -8,6 +8,6 @@ import (
 
 // 初始化资源，由用户调用
 func Init() {
-	container.RegisterYamContainer(&config.LogConfig{Prefix: config.YamlPrefix})
+	container.Add(&config.LogConfig{Prefix: config.YamlPrefix})
 	infra.Register(&LogrusStarter{})
 }
