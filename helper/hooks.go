@@ -4,7 +4,7 @@ TODO
  1. 将日志输出给kafka
  2. 将错误日志发送邮件给用户
  ...
- */
+*/
 package helper
 
 import (
@@ -24,7 +24,8 @@ func (m MailHook) Levels() []logrus.Level {
 func (m MailHook) Fire(entry *logrus.Entry) error {
 	return m.SendMail(entry.Message)
 }
-type KafkaHook struct {}
+
+type KafkaHook struct{}
 
 func (m KafkaHook) Levels() []logrus.Level {
 	return logrus.AllLevels
@@ -33,4 +34,3 @@ func (m KafkaHook) Levels() []logrus.Level {
 func (m KafkaHook) Fire(entry *logrus.Entry) error {
 	return nil
 }
-

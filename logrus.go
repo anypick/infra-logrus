@@ -5,9 +5,9 @@ import (
 	"github.com/anypick/infra-logrus/config"
 	"github.com/anypick/infra-logrus/helper"
 	"github.com/anypick/infra/utils/common"
+	selfformatter "github.com/anypick/logrus-self-formatter"
 	"github.com/lestrrat-go/file-rotatelogs"
 	"github.com/sirupsen/logrus"
-	"github.com/x-cray/logrus-prefixed-formatter"
 	"os"
 	"path"
 	"strings"
@@ -34,12 +34,14 @@ func initLogrus(config config.LogConfig) {
 	)
 
 	// 使用
-	formatter := &prefixed.TextFormatter{
+	formatter := &selfformatter.EaseFormatter{
 		FullTimestamp:   true,
 		TimestampFormat: common.TimeFormat,
-		ForceFormatting: true,
 		ForceColors:     false,
 		DisableColors:   false,
+		Formatter:       config.Formatter,
+		KvCom:           config.KvCom,
+		FieldMapCom:     config.FieldMapCom,
 	}
 	logrus.SetFormatter(formatter)
 	for _, hook := range helper.GetHook() {
